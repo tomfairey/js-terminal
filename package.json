@@ -1,0 +1,35 @@
+{
+  "name": "js-terminal",
+  "version": "1.0.0",
+  "description": "A web terminal for JavaScript!",
+  "main": "index.js",
+  "scripts": {
+    "test": "parcel test/index.html",
+    "old-test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tomfairey/js-terminal.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tomfairey/js-terminal/issues"
+  },
+  "homepage": "https://github.com/tomfairey/js-terminal#readme",
+  "dependencies": {
+    "parcel": "^1.12.3",
+    "vue": "^2.6.12",
+    "vue-hot-reload-api": "^2.3.4"
+  },
+  "browserslist": [
+    "last 3 Chrome versions",
+    "Firefox 63",
+    "Node 11"
+  ],
+  "devDependencies": {
+    "@vue/component-compiler-utils": "^3.2.0",
+    "vue-template-compiler": "^2.6.12"
+  }
+}
