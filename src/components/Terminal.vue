@@ -8,7 +8,7 @@
             </div>
             <div class="terminal-entry">
                 <div class="prefix">user@js-terminal></div>
-                <input v-model="command" ref="input" class="entry" contenteditable="true" @keyup.enter="execute(command)" />
+                <input v-model="command" ref="input" class="entry" contenteditable="true" @keyup.up="getCommandHistory" @keyup.down="getCommandHistoryNext" @keyup.enter="execute(command)" />
             </div>
         </div>
     </div>
@@ -21,6 +21,8 @@
             return {
                 theme: 'hacker',
                 command: '',
+                commandHistory: [],
+                commandHistoryIndex: null,
                 logs: [],
                 logAction: null,
                 errorAction: null,
@@ -33,6 +35,7 @@
             },
             execute(command) {
                 this.log(command);
+                this.commandHistory.push(command);
                 let output;
                 let error;
                 try {
@@ -43,6 +46,35 @@
                 }
                 if(output) this.log(output, true, error);
                 this.command = '';
+            },
+            getCommandHistory() {
+                let previousCommandHistoryIndex = this.commandHistoryIndex;
+
+                if(this.commandHistory.length) {
+                    if(this.commandHistoryIndex && this.commandHistoryIndex > 0) {
+                        this.commandHistoryIndex --;
+                    } else if(!this.commandHistoryIndex && this.commandHistoryIndex !== 0) {
+                        this.commandHistoryIndex = this.commandHistory.length - 1;
+                    }
+
+                    if(previousCommandHistoryIndex != this.commandHistoryIndex) this.command = this.commandHistory[this.commandHistoryIndex];
+                }
+            },
+            getCommandHistoryNext() {
+                let previousCommandHistoryIndex = this.commandHistoryIndex;
+
+                if(this.commandHistory.length) {
+                    if(this.commandHistoryIndex || this.commandHistoryIndex === 0) {
+                        this.commandHistoryIndex ++;
+                    }
+
+                    if(this.commandHistoryIndex > this.commandHistory.length - 1) {
+                        this.commandHistoryIndex = null;
+                        this.command = '';
+                    } else if(previousCommandHistoryIndex != this.commandHistoryIndex) {
+                        this.command = this.commandHistory[this.commandHistoryIndex];
+                    }
+                }
             }
         },
         mounted() {
